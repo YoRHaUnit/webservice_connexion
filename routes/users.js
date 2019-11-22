@@ -1,10 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var cors = require('cors');
-
+var bodyParser = require('body-parser')
 
 /* GET users listing. */
 router.use(cors());
+router.use(express.json())
+router.use(bodyParser.json());
+router.use(express.urlencoded({ extended: true }))
 
 router.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
@@ -12,12 +15,13 @@ router.use(function(req, res, next) {
   next();
 });
 
-router.get('/', function(req, res, next) {
-  //res.send({id:1});
+router.post('/', function(req, res) {
   var mysql = require('mysql');
-  res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   console.log('Get connection ...');
+  res.setHeader('Content-Type', 'text/plain')
+  res.write('you posted:\n')
+  console.log(req.body)
+
 
   var conn = mysql.createConnection({
     database: 'projetwebservicesconnexion',
@@ -29,14 +33,8 @@ router.get('/', function(req, res, next) {
   conn.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
-    var req1 = "select * from user";
-    conn.query(req1, function(err,rows,fields){
-      if (err) throw err;
-      console.log("L'utilisateur est : ", rows[0])
-      res.send(rows[0])
-    });
 
-    var req2 = "INSERT INTO user (login,password,prenom,nom,email) VALUE('pierrick','pierrick','pierrick','pierrick','pierrick')";
+    var req2 = "INSERT INTO user (login,password,prenom,nom,email) VALUE('"+req.body.login+"','"+req.body.password+"','"+req.body.prenom+"','"+req.body.nom+"','"+req.body.email+"')";
     conn.query(req2, function(err,fields){
       if (err) throw err;
     });
