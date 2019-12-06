@@ -15,13 +15,14 @@ router.use(function(req, res, next) {
   next();
 });
 
+
+
 router.post('/', function(req, res) {
   var mysql = require('mysql');
   console.log('Get connection ...');
   res.setHeader('Content-Type', 'text/plain')
   res.write('you posted:\n')
   console.log(req.body)
-
 
   var conn = mysql.createConnection({
     database: 'projetwebservicesconnexion',
@@ -40,5 +41,32 @@ router.post('/', function(req, res) {
     });
   });
 });
+
+
+router.get('/connexion/:id/:mdp', function(req,res){
+    var mysql = require('mysql');
+    console.log('Get connection ...');
+    res.setHeader('Content-Type', 'text/plain')
+    res.write('you posted:\n')
+    console.log(req.params.id);
+    console.log(req.params.mdp);
+
+    var conn = mysql.createConnection({
+        database: 'projetwebservicesconnexion',
+        host: "localhost",
+        user: "root",
+        password: ""
+    });
+
+    conn.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+        //var req2 = "INSERT INTO user (login,password,prenom,nom,email) VALUE('salut','salut','salut','salut','salut')";
+        var req2 = "SELECT * FROM user WHERE login = '"+ req.params.id +"' AND password = '"+ req.params.mdp +"'";
+        conn.query(req2, function(err,fields){
+            if (err) throw err;
+        });
+    });
+})
 
 module.exports = router;
