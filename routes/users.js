@@ -47,7 +47,6 @@ router.get('/connexion/:id/:mdp', function(req,res){
     var mysql = require('mysql');
     console.log('Get connection ...');
     res.setHeader('Content-Type', 'text/plain')
-    res.write('you posted:\n')
     console.log(req.params.id);
     console.log(req.params.mdp);
 
@@ -62,9 +61,20 @@ router.get('/connexion/:id/:mdp', function(req,res){
         if (err) throw err;
         console.log("Connected!");
         //var req2 = "INSERT INTO user (login,password,prenom,nom,email) VALUE('salut','salut','salut','salut','salut')";
-        var req2 = "SELECT * FROM user WHERE login = '"+ req.params.id +"' AND password = '"+ req.params.mdp +"'";
+        var req2 = "SELECT COUNT(*) as test FROM user WHERE login = '"+ req.params.id +"' AND password = '"+ req.params.mdp +"'";
         conn.query(req2, function(err,fields){
             if (err) throw err;
+            else {
+                if (fields[0].test != 0) {
+                    console.log("test1");
+                    res.json({bool : 'true'});
+                }
+                else {
+                    console.log("test2");
+                    res.json({bool : 'false'});
+                }
+
+            }
         });
     });
 })
