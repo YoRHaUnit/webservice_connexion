@@ -15,7 +15,12 @@ const getUsers = (request, response) => {
         if (error) {
             throw error
         }
-        response.status(200).json(results.rows)
+        if (results.rows.length === 0) {
+            response.status(204).send('Aucun resultat')
+        }
+        else {
+            response.status(200).json(results.rows)
+        }
     })
 };
 const createUser = (request, response) => {
