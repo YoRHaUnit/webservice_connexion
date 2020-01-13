@@ -58,14 +58,14 @@
           "name": "login",
           "in": "path",
           "required": true,
-          "description": "ID of user that we want to find",
+          "description": "login of user that we want to find",
           "type": "string"
         },
         {
           "name": "password",
           "in": "path",
           "required": true,
-          "description": "ID of user that we want to find",
+          "description": "password of user that we want to find",
           "type": "string"
         }
       ],
