@@ -1,0 +1,119 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Voici la documentation de mon API",
+    "description": "Yet Another Node.js Blogg Application API"
+  },
+  "host": "localhost:3000",
+  "basePath": "/api-docs",
+  "tags": [
+    {
+      "name": "Utilisateur",
+      "description": "API for users in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Utilisateur"
+        ],
+        "description": "Create a new user",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/Utilisateur"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/Utilisateur"
+            }
+          }
+        }
+      }
+    },
+    "/users?login={login}&password={password}": {
+      "parameters": [
+        {
+          "name": "login",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to find",
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Utilisateur"
+        ],
+        "summary": "Get user with given login and password",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/Utilisateur"
+            }
+          },
+          "204": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Utilisateur": {
+      "required": [
+        "email",
+        "_id"
+      ],
+      "properties": {
+        "login": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "prenom": {
+          "type": "string"
+        },
+        "nom": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}
