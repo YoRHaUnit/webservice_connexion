@@ -3,7 +3,7 @@
   "info": {
     "version": "1.0.0",
     "title": "Voici la documentation de mon API",
-    "description": "Yet Another Node.js Blogg Application API"
+    "description": "Cette API est utiliser pour gérer le systéme de connexion"
   },
   "host": "localhost:3000",
   "basePath": "/api-docs",
